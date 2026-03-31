@@ -1,5 +1,5 @@
 export const PANEL_TITLES = {
-  work: "Work",
+  work: "Projects",
   about: "About",
   contact: "Contact",
   social: "Social",
