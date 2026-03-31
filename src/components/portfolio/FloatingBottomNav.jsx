@@ -1,34 +1,29 @@
-import { useState } from "react";
 import { FLOATING_BOTTOM_NAV_ITEMS } from "../../constants/floatingBottomNav";
 
-function FloatingBottomNav() {
-  const [activeId, setActiveId] = useState("");
-
+function FloatingBottomNav({ activePanel, onOpenPanel, elevated }) {
   return (
-    <nav
-      className="pointer-events-none fixed bottom-0 left-0 right-0 z-40 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2"
+      <nav
+        className={`pointer-events-none fixed bottom-0 left-0 right-0 flex justify-center px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2 transition-[z-index] duration-0 ${
+          elevated ? "z-[60]" : "z-40"
+        }`}
       aria-label="Primary mobile"
     >
       <div className="pointer-events-auto flex w-[min(100%,20rem)] items-center justify-between gap-1 rounded-full border border-white/10 bg-portfolio-glass px-3 py-2 shadow-lg backdrop-blur-xl sm:max-w-sm sm:px-4">
         {FLOATING_BOTTOM_NAV_ITEMS.map((item) => {
-          const { id, label, href, external } = item;
-          const IconComponent = item.icon;
-          const active = id === activeId;
+          const { id, label, icon: IconComponent, panel } = item;
+          const active = activePanel === panel;
           return (
-            <a
+            <button
               key={id}
-              href={href}
+              type="button"
               aria-label={label}
-              aria-current={active ? "page" : undefined}
-              {...(external
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
+              aria-pressed={active}
               className={`relative flex size-11 items-center justify-center rounded-full transition-colors duration-300 active:scale-95 ${
                 active
                   ? "text-portfolio-bg"
                   : "text-portfolio-accent hover:text-portfolio-accent-hover"
               }`}
-              onClick={() => setActiveId(id)}
+              onClick={() => onOpenPanel(panel)}
             >
               {active ? (
                 <span
@@ -40,7 +35,7 @@ function FloatingBottomNav() {
                 className="relative z-10 size-[1.35rem]"
                 strokeWidth={1.75}
               />
-            </a>
+            </button>
           );
         })}
       </div>
