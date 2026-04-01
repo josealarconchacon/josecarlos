@@ -1,5 +1,9 @@
 import { useEffect } from "react";
-import { X } from "lucide-react";
+import { ArrowDown, X } from "lucide-react";
+import {
+  RESUME_DOWNLOAD_FILENAME,
+  RESUME_PDF_URL,
+} from "../../constants/resume";
 import { PANEL_TITLES } from "../../constants/slidePanel";
 import { PanelBody } from "./panels/PanelBody";
 
@@ -41,24 +45,38 @@ function SlidePanelShell({ open, panelId, onClose }) {
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <header className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
+        <header className="flex shrink-0 items-center gap-2 border-b border-white/10 px-4 py-4 pt-[max(1rem,env(safe-area-inset-top))]">
           <h2
             id="slide-panel-title"
-            className="font-epilogue text-lg font-bold tracking-tight text-white"
+            className="min-w-0 flex-1 truncate font-epilogue text-lg font-bold tracking-tight text-white"
           >
             {title}
           </h2>
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex size-10 items-center justify-center rounded-full text-portfolio-accent transition-colors hover:bg-white/5 hover:text-portfolio-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-portfolio-accent"
-            aria-label="Close panel"
-          >
-            <X className="size-5" strokeWidth={2} />
-          </button>
+          <div className="flex shrink-0 items-center gap-0.5">
+            {panelId === "resume" ? (
+              <a
+                href={RESUME_PDF_URL}
+                download={RESUME_DOWNLOAD_FILENAME}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex size-10 items-center justify-center rounded-full text-portfolio-accent transition-colors hover:bg-white/5 hover:text-portfolio-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-portfolio-accent"
+                aria-label="Download résumé (PDF)"
+              >
+                <ArrowDown className="size-5" strokeWidth={2} aria-hidden />
+              </a>
+            ) : null}
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex size-10 items-center justify-center rounded-full text-portfolio-accent transition-colors hover:bg-white/5 hover:text-portfolio-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-portfolio-accent"
+              aria-label="Close panel"
+            >
+              <X className="size-5" strokeWidth={2} />
+            </button>
+          </div>
         </header>
         <div
-          className="min-h-0 flex-1 overflow-y-auto px-4 pb-[max(6rem,env(safe-area-inset-bottom)+5rem)] pt-6"
+          className={`min-h-0 flex-1 overflow-y-auto px-4 pb-[max(6rem,env(safe-area-inset-bottom)+5rem)] ${panelId === "resume" ? "pt-4" : "pt-6"}`}
           role="region"
           aria-labelledby="slide-panel-title"
         >
