@@ -21,15 +21,7 @@ function clampPanelWidth(px) {
 
 function SlidePanelShell({ open, panelId, onClose }) {
   const [panelWidth, setPanelWidth] = useState(NARROW_WIDTH_PX);
-  const prevOpenRef = useRef(open);
   const dragRef = useRef(null);
-
-  if (open !== prevOpenRef.current) {
-    if (open) {
-      setPanelWidth(clampPanelWidth(NARROW_WIDTH_PX));
-    }
-    prevOpenRef.current = open;
-  }
 
   useEffect(() => {
     if (!open) return;

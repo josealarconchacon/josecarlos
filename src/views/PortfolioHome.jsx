@@ -5,7 +5,15 @@ import SlidePanelShell from "../components/portfolio/SlidePanelShell";
 
 function PortfolioHome() {
   const [activePanel, setActivePanel] = useState(null);
+  const [slideShellKey, setSlideShellKey] = useState(0);
   const panelOpen = activePanel !== null;
+
+  const handleOpenPanel = (panelId) => {
+    if (activePanel === null) {
+      setSlideShellKey((k) => k + 1);
+    }
+    setActivePanel(panelId);
+  };
 
   return (
     <div className="relative h-dvh max-h-dvh overflow-hidden bg-portfolio-bg">
@@ -19,12 +27,13 @@ function PortfolioHome() {
         </main>
         <FloatingBottomNav
           activePanel={activePanel}
-          onOpenPanel={setActivePanel}
+          onOpenPanel={handleOpenPanel}
           elevated={panelOpen}
         />
       </div>
 
       <SlidePanelShell
+        key={slideShellKey}
         open={panelOpen}
         panelId={activePanel}
         onClose={() => setActivePanel(null)}
