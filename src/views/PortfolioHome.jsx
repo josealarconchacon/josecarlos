@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HeroSection from "../components/portfolio/HeroSection";
 import FloatingBottomNav from "../components/portfolio/FloatingBottomNav";
 import SlidePanelShell from "../components/portfolio/SlidePanelShell";
+import { prefetchAllPanels } from "../components/portfolio/panels/prefetchPanels";
 
 function PortfolioHome() {
   const [activePanel, setActivePanel] = useState(null);
-  const [slideShellKey, setSlideShellKey] = useState(0);
   const panelOpen = activePanel !== null;
 
+  useEffect(() => {
+    prefetchAllPanels();
+  }, []);
+
   const handleOpenPanel = (panelId) => {
-    if (activePanel === null) {
-      setSlideShellKey((k) => k + 1);
-    }
     setActivePanel(panelId);
   };
 
@@ -22,7 +23,11 @@ function PortfolioHome() {
           panelOpen ? "-translate-x-[min(18%,5.5rem)] md:-translate-x-[min(22%,8rem)]" : ""
         }`}
       >
-        <main id="main" className="relative min-h-0 flex-1">
+        <main
+          id="main"
+          tabIndex={-1}
+          className="relative min-h-0 flex-1 outline-none"
+        >
           <HeroSection />
         </main>
         <FloatingBottomNav
@@ -33,7 +38,6 @@ function PortfolioHome() {
       </div>
 
       <SlidePanelShell
-        key={slideShellKey}
         open={panelOpen}
         panelId={activePanel}
         onClose={() => setActivePanel(null)}

@@ -22,6 +22,24 @@ function clampPanelWidth(px) {
 function SlidePanelShell({ open, panelId, onClose }) {
   const [panelWidth, setPanelWidth] = useState(NARROW_WIDTH_PX);
   const dragRef = useRef(null);
+  const shellRef = useRef(null);
+  const prevOpenRef = useRef(open);
+
+  useEffect(() => {
+    if (open && !prevOpenRef.current) {
+      setPanelWidth(clampPanelWidth(NARROW_WIDTH_PX));
+    }
+    prevOpenRef.current = open;
+  }, [open]);
+
+  useEffect(() => {
+    if (open) return;
+    const root = shellRef.current;
+    const active = document.activeElement;
+    if (!(root && active instanceof HTMLElement && root.contains(active))) return;
+    active.blur();
+    document.getElementById("main")?.focus({ preventScroll: true });
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -62,6 +80,7 @@ function SlidePanelShell({ open, panelId, onClose }) {
 
   return (
     <div
+      ref={shellRef}
       className={`fixed inset-0 z-40 flex max-h-dvh transition-[visibility,opacity] duration-300 ${
         open ? "visible opacity-100" : "pointer-events-none invisible opacity-0"
       }`}

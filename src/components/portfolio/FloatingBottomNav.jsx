@@ -1,4 +1,5 @@
 import { FLOATING_BOTTOM_NAV_ITEMS } from "../../constants/floatingBottomNav";
+import { prefetchPanel } from "./panels/prefetchPanels";
 
 function FloatingBottomNav({ activePanel, onOpenPanel, elevated }) {
   return (
@@ -29,6 +30,9 @@ function FloatingBottomNav({ activePanel, onOpenPanel, elevated }) {
                     ? "text-portfolio-bg"
                     : "text-portfolio-accent hover:text-portfolio-accent-hover"
                 }`}
+                onPointerEnter={() => prefetchPanel(panel)}
+                onPointerDown={() => prefetchPanel(panel)}
+                onFocus={() => prefetchPanel(panel)}
                 onClick={() => onOpenPanel(panel)}
               >
                 {active ? (
