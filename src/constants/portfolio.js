@@ -1,4 +1,4 @@
-import josePortraitUrl from "../assets/jose_portolio_img.jpeg";
+import josePortraitUrl from "../assets/jose_portolio_img.webp";
 
 export const HERO_CONTENT = {
   eyebrow: "Frontend engineer",

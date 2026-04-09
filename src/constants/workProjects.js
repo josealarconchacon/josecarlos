@@ -1,5 +1,5 @@
-import dailyInventoryProjectImg from "../assets/daily-inventory-project.png";
-import oxalateProjectImg from "../assets/oxalate-project.png";
+import dailyInventoryProjectImg from "../assets/daily-inventory-project.webp";
+import oxalateProjectImg from "../assets/oxalate-project.webp";
 
 export const WORK_PROJECTS = [
   {
